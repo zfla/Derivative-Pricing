@@ -44,4 +44,35 @@ contract DerivativesPricer {
             return p;
         }
 
+    function getQuarterlyDividend(
+        uint256 t,
+        uint256 t_n,
+        uint256 d,
+        uint256 f_r
+    ) external returns (uint256) {
+        uint256[] times = []
+        uint256 counter = t;
+        if t_n <= t {
+            counter -= t_n;
+            times.push(counter);
+        } else {
+            return 0;
+        }
+
+        while true {
+            counter -= 3;
+            if counter > 0 {
+                times.push(counter);
+            } else {
+                break
+            }
+        }
+        uint256 tot = 0;
+        for (uint i=0; i < counter.length; i++) {
+            tot += d * (1 + times[i]/12 * f_r);
+        }
+
+        return tot;
+    }
+
 }
