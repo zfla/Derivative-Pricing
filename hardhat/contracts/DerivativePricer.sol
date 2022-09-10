@@ -26,24 +26,35 @@ contract DerivativesPricer {
         }
 
     
-    /** @dev Calculates the forward price of a stock
-      * @param s Price of the stock
-      * @param t Time to maturity of the contract
-      * @param r Interest rate
-      * @param d Dividends accumulated across the duration of the contract
-      * @return p Calculated forward price of the stock
+    /** @dev       Calculates the forward price of a stock
+      * @param s   Price of the stock
+      * @param t   Time to maturity of the contract
+      * @param r   Interest rate
+      * @param d   Dividend payment per quarter
+      * @param t_n Time until the next dividend payment
+      * @param f_r Forward rate
+      * @return p  Calculated forward price of the stock
       */
     function getStockPrice(
         uint256 s,
         uint256 t,
         uint256 r,
-        uint256 d
+        uint256 d,
+        uint256 t_n,
+        uint256 f_r
         )
         external returns (uint256) {
-            p = s * (1 + r * t) - d;
+            p = s * (1 + r * t) - getQuarterlyDividend(t, t_n, d, f_r);
             return p;
         }
 
+    /** @dev        Calculates the total dividend for the above function
+      * @param t    Time to maturity of the contract
+      * @param t_n  Time until the next dividend payment
+      * @param d    Dividend payment per quarter
+      * @param f_r  Forward rate
+      * @return tot The total dividend payment
+      */
     function getQuarterlyDividend(
         uint256 t,
         uint256 t_n,
