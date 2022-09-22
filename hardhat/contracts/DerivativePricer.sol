@@ -147,4 +147,5 @@ contract DerivativesPricer {
         return tot;
     } 
 
+    function blackScholes() {}
 }
