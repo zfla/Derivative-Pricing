@@ -145,7 +145,17 @@ contract DerivativesPricer {
         }
 
         return tot;
-    } 
+    }
+    
+    function blackScholes(
+        uint256 e_p,
+        uint256 t,
+        uint256 c_p,
+        uint256 i,
+        uint256 v
+    ) external returns (uint256) {
+        return 0;        
+    }
 
     function blackScholes() {}
 }
