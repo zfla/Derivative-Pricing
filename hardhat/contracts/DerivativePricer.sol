@@ -60,8 +60,8 @@ contract DerivativesPricer {
         uint256 _t_n,
         uint256 _d,
         uint256 _f_r
-    ) external returns (uint256) {
-        uint256[] times = [];
+    ) internal returns (uint256) {
+        uint256[] storage times;
         uint256 counter = _t;
         if (_t_n <= _t) {
             counter -= _t_n;
@@ -79,7 +79,7 @@ contract DerivativesPricer {
             }
         }
         uint256 tot = 0;
-        for (uint i=0; i < counter.length; i++) {
+        for (uint i=0; i < times.length; i++) {
             tot += _d * (1 + times[i]/12 * _f_r);
         }
 
@@ -121,8 +121,8 @@ contract DerivativesPricer {
         uint256 _t_n,
         uint256 _c,
         uint256 _f_r
-    ) external returns (uint256) {
-        uint256[] times = [];
+    ) internal returns (uint256) {
+        uint256[] storage times;
         uint256 counter = _t;
         if (_t_n <= _t) {
             counter -= _t_n;
@@ -140,7 +140,7 @@ contract DerivativesPricer {
             }
         }
         uint256 tot = 0;
-        for (uint i=0; i < counter.length; i++) {
+        for (uint i=0; i < times.length; i++) {
             tot += _c * (1 + times[i]/12 * _f_r);
         }
 
@@ -178,4 +178,5 @@ contract DerivativesPricer {
     function getWeeklyVolatility(uint256 _vol) external returns (uint256) {
         return 1/(52**(1/2)) * _vol;
     }
+
 }
